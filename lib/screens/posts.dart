@@ -18,14 +18,17 @@ class PostState extends StatefulWidget {
 class _PostState extends State<PostState> {
 
   String foo;
-
   _PostState({this.foo});
 
   var items = List<String>.generate(100, (index) => 'Item $index');
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     int counter = 3;
+
+    String mas;
+    String description;
 
     return Scaffold(
 
@@ -58,8 +61,101 @@ class _PostState extends State<PostState> {
 
       backgroundColor: Colors.blue,
       body: Container(
-        child: Row(
+        child: Column(
           children: <Widget>[
+            Form(
+                key: _formKey,
+                child: Column(
+                    children: <Widget>[
+
+                       Padding(
+                         padding: const EdgeInsets.all(12.0),
+                         child: TextFormField(
+                           validator: (value) {
+                             if (value.isEmpty) {
+                               return 'Please enter some text';
+                             }
+                             return null;
+                           },
+                           decoration: InputDecoration(
+                             hintStyle: TextStyle(
+                               color: Colors.white,
+                             ),
+                             labelStyle: TextStyle(
+                               color: Colors.white,
+                               fontSize: 18.0
+                             ),
+                             hintText: "Type the massage here",
+                             labelText: "Massage",
+                             focusColor: Colors.white
+                           ),
+                           maxLines: 1,
+                           maxLength: 20,
+                           style: TextStyle(
+                             color: Colors.white,
+                           ),
+                         ),
+                       ),
+
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return 'Please enter description text';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              hintStyle: TextStyle(
+                                color: Colors.white,
+                              ),
+                              labelStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0
+                              ),
+                              hintText: "Type the description here",
+                              labelText: "Description",
+                              focusColor: Colors.white
+                          ),
+                          maxLines: 5,
+                          maxLength: 50,
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 15.0),
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.purpleAccent,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                            onPressed: () {
+                              if (_formKey.currentState.validate()) {
+                                Scaffold.of(context)
+                                // ignore: deprecated_member_use
+                                    .showSnackBar(SnackBar(content: Text('Post adding wait...')));
+                              }
+                            },
+                            child: Text('Submit', style: TextStyle(
+                              fontSize: 18.0,
+                            ),),
+
+                          ),
+                        ),
+                      ),
+
+                    ],
+                ),
+            ),
           ],
         )
       ),
