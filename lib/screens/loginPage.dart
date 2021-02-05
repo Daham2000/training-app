@@ -126,7 +126,7 @@ class _LoginpageState extends State<Loginpage> {
                                     if (_formKey.currentState.validate()) {
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => PostState()),
+                                        MaterialPageRoute(builder: (context) => PostState(name)),
                                       );
                                       // If the form is valid, display a Snackbar.
                                       Scaffold.of(context)
