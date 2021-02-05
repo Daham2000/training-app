@@ -1,9 +1,9 @@
-import 'posts.dart';
-import 'form_screen.dart';
+import '../client_home_page/posts.dart';
+import '../form_screen.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/rendering.dart';
 
-import 'second_screen.dart';
+import '../second_screen.dart';
 
 class Loginpage extends StatefulWidget {
   @override
@@ -80,6 +80,7 @@ class _LoginpageState extends State<Loginpage> {
                                 //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
                                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 2.0),
                                 child: TextFormField(
+                                  autofocus: false,
                                   validator: (value) {
                                     if (value.isEmpty) {
                                       return 'Please enter a nick name';

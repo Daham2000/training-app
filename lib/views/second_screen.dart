@@ -1,4 +1,4 @@
-import 'package:dear_diary/screens/loginPage.dart';
+import 'root_page/loginPage.dart';
 import "package:flutter/material.dart";
 
 class SecondScreen extends StatelessWidget {

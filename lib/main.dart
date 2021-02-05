@@ -1,7 +1,7 @@
-import 'screens/second_screen.dart';
+import 'views//second_screen.dart';
 import "package:flutter/material.dart";
-import 'screens/loginPage.dart';
-import 'screens/form_screen.dart';
+import 'views/root_page/loginPage.dart';
+import 'views/form_screen.dart';
 
 void main(){
   runApp(App());
