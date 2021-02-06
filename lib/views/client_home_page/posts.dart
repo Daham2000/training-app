@@ -1,4 +1,6 @@
 import "dart:math";
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dear_diary/db/repository/postRepository/PostRepository.dart';
 import "package:firebase_database/firebase_database.dart";
 import 'package:dear_diary/db/models/Post.dart';
 import 'package:dear_diary/widgets/DiaryForm.dart';
@@ -49,14 +51,18 @@ class _PostState extends State<PostState> {
     currentPage = formView;
   }
 
-  void callback(msg, description) {
-    DatabaseReference _testRef = FirebaseDatabase.instance.reference().child("test");
-    _testRef.set("Hello world ${Random().nextInt(100)}");
+  void callback(msg, description) async {
+    Timestamp now= Timestamp.now();
+    DateTime datetime = now.toDate();
+  
+    PostService(pid:"post_${Random().nextInt(1000)}").updatePostData
+      (new Post(foo, msg, description,datetime));
 
     setState(() {
       this.msg = msg;
       this.description = description;
     });
+
   }
 
   final _formKey = GlobalKey<FormState>();

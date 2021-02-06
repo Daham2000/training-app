@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:dear_diary/db/database.dart';
+import 'package:dear_diary/db/repository/database.dart';
 
 import '../client_home_page/posts.dart';
 import "package:flutter/material.dart";
