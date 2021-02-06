@@ -62,7 +62,7 @@ class _PostState extends State<PostState> {
     int counter = 3;
     int i=0;
 
-    List<Widget> items =  List.generate(countPosts, (i) =>  CardWidget(foo, msg, description));
+    List<Widget> items =  List.generate(countPosts, (i) =>  new CardWidget(foo, msg, description));
 
     return Scaffold(
 
