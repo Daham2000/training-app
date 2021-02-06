@@ -1,4 +1,6 @@
+import 'package:dear_diary/widgets/Form.dart';
 import 'package:dear_diary/widgets/card.dart';
+import 'package:dear_diary/widgets/posts.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_widgets/animated_widgets.dart';
 import 'package:badges/badges.dart';
@@ -9,29 +11,58 @@ String userName;
 class PostState extends StatefulWidget {
 
   final String UserName;
-
   PostState(this.UserName);
+  static int count = 1;
+  static String msg="Reasons why english learning is so important";
+  static String description = "English is the Language of International Communication \n"
+      "English gives access to more entertainment and more access to the Internet \n"
+      "English makes it easier to travel";
+
+
+
+  static getPosts(){
+
+  }
 
   @override
-  _PostState createState() => _PostState(foo: this.UserName);
+  _PostState createState() => _PostState(foo: this.UserName,countPosts:count, msg:msg, description:description);
 }
 
 class _PostState extends State<PostState> {
+  int countPosts = 1;
+
+  FormView formView;
+  Widget currentPage;
+
+  String msg="";
+  String description = "";
 
   String foo;
-  _PostState({this.foo});
+  _PostState({this.foo, this.countPosts, this.msg, this.description});
 
-  var items = List<String>.generate(100, (index) => 'Item $index');
+  @override
+  void initState() {
+    super.initState();
+    formView = FormView(foo, callback);
+    currentPage = formView;
+  }
+
+  void callback(msg, description) {
+    setState(() {
+      countPosts++;
+      this.msg = msg;
+      this.description = description;
+    });
+  }
+
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     int counter = 3;
+    int i=0;
 
-    String msg="Reasons why english learning is so important";
-    String description = "English is the Language of International Communication \n"
-        "English gives access to more entertainment and more access to the Internet \n"
-        "English makes it easier to travel";
+    List<Widget> items =  List.generate(countPosts, (i) =>  CardWidget(foo, msg, description));
 
     return Scaffold(
 
@@ -63,131 +94,27 @@ class _PostState extends State<PostState> {
       ),
 
       backgroundColor: Colors.blue,
-      body: ListView(
-            children: <Widget>[
-              Card(
-                color: Colors.blueAccent,
-                margin: const EdgeInsets.all(12.0),
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.white70, width: 1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Form(
-                    key: _formKey,
-                    child: Column(
-                        children: <Widget>[
+      body: Center(
+        child: new ListView(
+          children: <Widget>[
 
-                           Padding(
-                             padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 12.0),
-                             child: TextFormField(
-                               autofocus: false,
-                               validator: (value) {
-                                 if (value.isEmpty) {
-                                   return 'Please enter some text';
-                                 }else{
-                                   msg = value;
-                                 }
-                                 return null;
-                               },
-                               decoration: InputDecoration(
-                                   alignLabelWithHint: true,
-                                   fillColor: Colors.blueAccent[300],
-                                   filled: true,
-                                   border: new OutlineInputBorder(
-                                     borderSide: BorderSide.none,
-                                     borderRadius: const BorderRadius.all(
-                                           const Radius.circular(50.0),
-                                     ),
-                                   ),
-                                 hintStyle: TextStyle(
-                                   color: Colors.white,
-                                 ),
-                                 labelStyle: TextStyle(
-                                   color: Colors.black45,
-                                   fontSize: 18.0
-                                 ),
-                                 labelText: "Submit New",
-                                 focusColor: Colors.white
-                               ),
-                               maxLines: 1,
-                               style: TextStyle(
-                                 color: Colors.white,
-                               ),
-                             ),
-                           ),
-
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: TextFormField(
-                              autofocus: false,
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return 'Please enter description text';
-                                }else{
-                                  description = value;
-                                }
-                                return null;
-                              },
-                              decoration: InputDecoration(
-                                alignLabelWithHint: true,
-                                fillColor: Colors.blueAccent[300],
-                                  filled: true,
-                                  border: new OutlineInputBorder(
-                                    borderSide: BorderSide.none,
-                                    borderRadius: const BorderRadius.all(
-                                        const Radius.circular(20.0),
-                                      ),
-                                  ),
-                                  labelStyle: TextStyle(
-                                      color: Colors.black45,
-                                      fontSize: 18.0,
-                                  ),
-                                  labelText: "Enter Description",
-                                  focusColor: Colors.white
-                              ),
-                              maxLines: 5,
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 15.0),
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: ElevatedButton(
-
-                                style: ElevatedButton.styleFrom(
-                                  primary: Colors.blueAccent[700],
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  if (_formKey.currentState.validate()) {
-
-                                  }
-                                },
-                                child: Text('SUBMIT', style: TextStyle(
-                                  fontSize: 18.0,
-                                ),),
-
-                              ),
-                            ),
-                          ),
-
-                        ],
-                    ),
-                ),
+            new Container(
+                child: FormView(foo, callback),
+            ),
+            new Container(
+              height: 350,
+              child: new ListView(
+                children: items,
+                scrollDirection: Axis.vertical,
               ),
+            ),
+            //new ContactRow()
+          ],
+        ),
+      ),
 
-              CardWidget(
-                foo,msg,description
-              ),
+    );
 
-            ],
-          )
-        );
   }
+
 }

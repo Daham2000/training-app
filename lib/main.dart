@@ -1,7 +1,5 @@
-import 'views//second_screen.dart';
 import "package:flutter/material.dart";
 import 'views/root_page/loginPage.dart';
-import 'views/form_screen.dart';
 
 void main(){
   runApp(App());
@@ -15,7 +13,6 @@ class App extends StatelessWidget {
       title: "Dear Diary",
       home: Loginpage(),
       routes: <String, WidgetBuilder>{
-        "/second" : (context) => FormTest(),
       },
     );
   }

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 class CardWidget extends StatelessWidget {
   String foo;
-  String msg;
-  String description;
+  String msg="Reasons why english learning is so important";
+  String description = "English is the Language of International Communication \n"
+      "English gives access to more entertainment and more access to the Internet \n"
+      "English makes it easier to travel";
 
   CardWidget(this.foo, this.msg, this.description);
 
@@ -63,7 +65,7 @@ class CardWidget extends StatelessWidget {
                   // When the user taps the button, show a snackbar.
                   onTap: () {
                     Scaffold.of(context).showSnackBar(SnackBar(
-                      content: Text('Tap'),
+                      content: Text('Not more data'),
                     ));
                   },
                   child: Container(
