@@ -1,10 +1,10 @@
-import 'package:dear_diary/widgets/Form.dart';
-import 'package:dear_diary/widgets/card.dart';
+import 'package:dear_diary/db/models/Post.dart';
+import 'package:dear_diary/widgets/DiaryForm.dart';
+import 'package:dear_diary/widgets/DiaryCard.dart';
 import 'package:dear_diary/widgets/posts.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_widgets/animated_widgets.dart';
 import 'package:badges/badges.dart';
-import 'package:dear_diary/models/post.dart';
 
 String userName;
 
@@ -17,12 +17,6 @@ class PostState extends StatefulWidget {
   static String description = "English is the Language of International Communication \n"
       "English gives access to more entertainment and more access to the Internet \n"
       "English makes it easier to travel";
-
-
-
-  static getPosts(){
-
-  }
 
   @override
   _PostState createState() => _PostState(foo: this.UserName,countPosts:count, msg:msg, description:description);
@@ -40,6 +34,8 @@ class _PostState extends State<PostState> {
   String foo;
   _PostState({this.foo, this.countPosts, this.msg, this.description});
 
+  List<CardWidget> postWidgets = [new CardWidget("","Reasons why english learning is so important","")];
+
   @override
   void initState() {
     super.initState();
@@ -49,7 +45,6 @@ class _PostState extends State<PostState> {
 
   void callback(msg, description) {
     setState(() {
-      countPosts++;
       this.msg = msg;
       this.description = description;
     });
@@ -62,7 +57,11 @@ class _PostState extends State<PostState> {
     int counter = 3;
     int i=0;
 
-    List<Widget> items =  List.generate(countPosts, (i) =>  new CardWidget(foo, msg, description));
+    List<CardWidget> items = [];
+
+    setState(() {
+      postWidgets.add(new CardWidget(foo,msg,description));
+    });
 
     return Scaffold(
 
@@ -104,7 +103,7 @@ class _PostState extends State<PostState> {
             new Container(
               height: 350,
               child: new ListView(
-                children: items,
+                children: postWidgets,
                 scrollDirection: Axis.vertical,
               ),
             ),
