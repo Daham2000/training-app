@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "244016062162",
+    "project_id": "dear-diary-daham",
+    "storage_bucket": "dear-diary-daham.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:244016062162:android:db22a6cfccc4c69af6170b",
+        "android_client_info": {
+          "package_name": "com.fcodelabs.training_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "244016062162-kr3mqfml40vsqmv8ufkapnrotj80rak3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSPhpwfMBdMfyecD7_pOeICsqbxFIPe2k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "244016062162-kr3mqfml40vsqmv8ufkapnrotj80rak3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

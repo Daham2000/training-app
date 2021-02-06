@@ -1,3 +1,7 @@
+import 'dart:math';
+
+import 'package:dear_diary/db/database.dart';
+
 import '../client_home_page/posts.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/rendering.dart';
@@ -119,16 +123,16 @@ class _LoginpageState extends State<Loginpage> {
                                       borderRadius: BorderRadius.circular(32.0),
                                     ),
                                   ),
-                                  onPressed: () {
+                                  onPressed: ()  async {
                                     // otherwise.
                                     if (_formKey.currentState.validate()) {
+                                      DatabaseService(uid:"user_${Random().
+                                      nextInt(1000)}").updateUserdata(name);
+
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(builder: (context) => PostState(name)),
                                       );
-                                      // If the form is valid, display a Snackbar.
-                                      Scaffold.of(context)
-                                          .showSnackBar(SnackBar(content: Text('Processing Data')));
                                     }
 
                                   },

@@ -1,3 +1,5 @@
+import 'package:fcode_bloc/fcode_bloc.dart';
+
 class Post{
   String UserName;
   String massage;

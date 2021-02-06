@@ -1,3 +1,5 @@
+import "dart:math";
+import "package:firebase_database/firebase_database.dart";
 import 'package:dear_diary/db/models/Post.dart';
 import 'package:dear_diary/widgets/DiaryForm.dart';
 import 'package:dear_diary/widgets/DiaryCard.dart';
@@ -5,6 +7,8 @@ import 'package:dear_diary/widgets/posts.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_widgets/animated_widgets.dart';
 import 'package:badges/badges.dart';
+import "package:firebase_core/firebase_core.dart";
+
 
 String userName;
 
@@ -34,7 +38,9 @@ class _PostState extends State<PostState> {
   String foo;
   _PostState({this.foo, this.countPosts, this.msg, this.description});
 
-  List<CardWidget> postWidgets = [new CardWidget("","Reasons why english learning is so important","")];
+  List<CardWidget> postWidgets = [new CardWidget("Noor","Reasons why english learning is so important","English is the Language of International Communication \n"
+      "English gives access to more entertainment and more access to the Internet \n"
+      "English makes it easier to travel")];
 
   @override
   void initState() {
@@ -44,6 +50,9 @@ class _PostState extends State<PostState> {
   }
 
   void callback(msg, description) {
+    DatabaseReference _testRef = FirebaseDatabase.instance.reference().child("test");
+    _testRef.set("Hello world ${Random().nextInt(100)}");
+
     setState(() {
       this.msg = msg;
       this.description = description;
