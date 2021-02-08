@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fcode_bloc/fcode_bloc.dart';
 
-class Post{
+class Post extends DBModel{
   String UserName;
   String massage;
   String description;

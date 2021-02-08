@@ -44,7 +44,7 @@ class _PostState extends State<PostState> {
       postWidgets = postWidgets2.reversed.toList();
     });
   }
-xh
+
   String foo;
   _PostState({this.foo, this.countPosts, this.msg, this.description, this.postWidgets});
 
