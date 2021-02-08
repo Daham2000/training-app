@@ -114,6 +114,7 @@ class FormView extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
+
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
                       callback(msg, description);

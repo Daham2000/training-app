@@ -1,10 +1,10 @@
 import 'dart:math';
-
 import 'package:dear_diary/db/repository/database.dart';
-
+import 'package:dear_diary/widgets/DiaryCard.dart';
 import '../client_home_page/posts.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/rendering.dart';
+import 'package:dear_diary/db/repository/postRepository/PostRepository.dart';
 
 class Loginpage extends StatefulWidget {
   @override
@@ -15,6 +15,14 @@ class _LoginpageState extends State<Loginpage> {
 
   final _formKey = GlobalKey<FormState>();
   String name;
+  String randomName;
+  List<CardWidget> postWidgets = [];
+
+  Future<void> setData() async{
+    Future<List<CardWidget>> data = PostService().getData();
+    postWidgets = await data;
+    postWidgets = postWidgets.reversed.toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +116,6 @@ class _LoginpageState extends State<Loginpage> {
                                     ),
                                   ),
                                   onPressed: () {
-
                                   },
                                   child: Text('RANDOM'),
                                 ),
@@ -126,9 +133,9 @@ class _LoginpageState extends State<Loginpage> {
                                   onPressed: ()  async {
                                     // otherwise.
                                     if (_formKey.currentState.validate()) {
+
                                       DatabaseService(uid:"user_${Random().
                                       nextInt(1000)}").updateUserdata(name);
-
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(builder: (context) => PostState(name)),

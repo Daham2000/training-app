@@ -5,9 +5,9 @@ class Post{
   String UserName;
   String massage;
   String description;
-  DateTime created;
+  Timestamp created;
 
-  Post(String UserName, String massage, String description, DateTime created){
+  Post(String UserName, String massage, String description, Timestamp created){
     this.UserName =UserName;
     this.massage = massage;
     this.description = description;
