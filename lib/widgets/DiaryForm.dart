@@ -1,4 +1,3 @@
-import 'package:dear_diary/views/client_home_page/posts.dart';
 import 'package:flutter/material.dart';
 
 class FormView extends StatelessWidget {
@@ -15,7 +14,6 @@ class FormView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-
       color: Colors.blueAccent,
       margin: const EdgeInsets.all(10.0),
       shape: RoundedRectangleBorder(
@@ -26,15 +24,15 @@ class FormView extends StatelessWidget {
         key: _formKey,
         child: Column(
           children: <Widget>[
-
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 12.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 25.0, horizontal: 12.0),
               child: TextFormField(
                 autofocus: false,
                 validator: (value) {
                   if (value.isEmpty) {
                     return 'Please enter some text';
-                  }else{
+                  } else {
                     msg = value;
                   }
                   return null;
@@ -52,20 +50,16 @@ class FormView extends StatelessWidget {
                     hintStyle: TextStyle(
                       color: Colors.white,
                     ),
-                    labelStyle: TextStyle(
-                        color: Colors.black45,
-                        fontSize: 18.0
-                    ),
+                    labelStyle:
+                        TextStyle(color: Colors.black45, fontSize: 18.0),
                     labelText: "Submit New",
-                    focusColor: Colors.white
-                ),
+                    focusColor: Colors.white),
                 maxLines: 1,
                 style: TextStyle(
                   color: Colors.white,
                 ),
               ),
             ),
-
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: TextFormField(
@@ -73,7 +67,7 @@ class FormView extends StatelessWidget {
                 validator: (value) {
                   if (value.isEmpty) {
                     return 'Please enter description text';
-                  }else{
+                  } else {
                     description = value;
                   }
                   return null;
@@ -93,45 +87,42 @@ class FormView extends StatelessWidget {
                       fontSize: 18.0,
                     ),
                     labelText: "Enter Description",
-                    focusColor: Colors.white
-                ),
+                    focusColor: Colors.white),
                 maxLines: 5,
                 style: TextStyle(
                   color: Colors.white,
                 ),
               ),
             ),
-
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 15.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 16.0, horizontal: 15.0),
               child: SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-
                   style: ElevatedButton.styleFrom(
                     primary: Colors.blueAccent[700],
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                   ),
-
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
                       callback(msg, description);
                     }
                   },
-                  child: Text('SUBMIT', style: TextStyle(
-                    fontSize: 18.0,
-                  ),),
-
+                  child: Text(
+                    'SUBMIT',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                    ),
+                  ),
                 ),
               ),
             ),
-
           ],
         ),
       ),
-
     );
   }
 }

@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class CardWidget extends StatelessWidget {
   String foo;
-  String msg="Reasons why english learning is so important";
-  String description = "English is the Language of International Communication \n"
+  String msg = "Reasons why english learning is so important";
+  String description =
+      "English is the Language of International Communication \n"
       "English gives access to more entertainment and more access to the Internet \n"
       "English makes it easier to travel";
 
@@ -14,12 +15,9 @@ class CardWidget extends StatelessWidget {
     return Card(
       color: Colors.lightBlueAccent,
       margin: const EdgeInsets.all(14.0),
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0)
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       child: Column(
         children: <Widget>[
-
           Padding(
             padding: const EdgeInsets.all(14.0),
             child: Text(
@@ -29,12 +27,11 @@ class CardWidget extends StatelessWidget {
               ),
             ),
           ),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Container(
-                padding: const EdgeInsets.only(left:14.0),
+                padding: const EdgeInsets.only(left: 14.0),
                 child: Text(
                   "$foo",
                   style: TextStyle(
@@ -45,7 +42,6 @@ class CardWidget extends StatelessWidget {
               ),
             ],
           ),
-
           Padding(
             padding: const EdgeInsets.all(14.0),
             child: Text(
@@ -55,7 +51,6 @@ class CardWidget extends StatelessWidget {
               ),
             ),
           ),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -76,13 +71,8 @@ class CardWidget extends StatelessWidget {
               ),
             ],
           ),
-
         ],
-
-
       ),
-
     );
-
   }
 }
