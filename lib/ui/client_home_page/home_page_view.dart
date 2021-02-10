@@ -63,7 +63,6 @@ class _HomeView extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocBuilder<HomeBloc, HomeState>(
         buildWhen: (pre, current) => pre.posts != current.posts,
         builder: (context, state) {

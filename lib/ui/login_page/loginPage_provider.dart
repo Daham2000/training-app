@@ -1,4 +1,3 @@
-import 'package:dear_diary/ui/root_page/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'login_page.dart';

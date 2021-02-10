@@ -1,5 +1,6 @@
 import 'package:dear_diary/ui/client_home_page/home_page.dart';
 import 'package:dear_diary/ui/client_home_page/home_page_bloc.dart';
+import 'package:dear_diary/util/routes.dart';
 import 'package:dear_diary/widgets/DiaryCard.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../client_home_page/home_page_view.dart';
@@ -134,10 +135,9 @@ class _LoginpageState extends State<LoginView> {
                                 onPressed: () async {
                                   // otherwise.
                                   if (_formKey.currentState.validate()) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => HomeView()),
+                                    Future.microtask(
+                                      () => Navigator.pushReplacementNamed(
+                                          context, Routes.HOME_ROUTE),
                                     );
                                   }
                                 },

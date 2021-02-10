@@ -1,5 +1,5 @@
-import 'package:dear_diary/ui/client_home_page/home_page_provider.dart';
-import 'package:dear_diary/ui/root_page/login_page.dart';
+import 'package:dear_diary/ui/client_home_page/home_page.dart';
+import 'package:dear_diary/ui/login_page/login_page.dart';
 import 'package:flutter/material.dart';
 
 abstract class Routes{

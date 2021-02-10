@@ -11,7 +11,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   final _postRepository = PostRepository();
 
-  HomeBloc(initialState) : super(initialState);
+  HomeBloc(initialState) : super(HomeState.init());
 
   //getAllPosts from here
   void getAllPosts() {
