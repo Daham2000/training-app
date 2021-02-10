@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 @immutable
 class HomeState {
-  final List<Post> posts;
+  List<Post> posts;
 
   HomeState({@required this.posts});
 

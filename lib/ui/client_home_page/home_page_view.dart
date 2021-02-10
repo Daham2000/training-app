@@ -10,15 +10,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'home_page.dart';
 
 class HomeView extends StatefulWidget {
-  final String UserName;
-
-  HomeView(this.UserName);
-
   static int count = 1;
   List<CardWidget> postWidgets = [];
 
+  HomeView();
+
   @override
-  _HomeView createState() => _HomeView(name: UserName);
+  _HomeView createState() => _HomeView(name: "UserName");
 }
 
 class _HomeView extends State<HomeView> {
@@ -66,72 +64,62 @@ class _HomeView extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
 
-    final scaffold = Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(),
-      ),
-    );
-
-    final mainChild = BlocBuilder<HomeBloc, HomeState>(
-      buildWhen:(pre, current) => pre.posts != current.posts,
-      // for (int i = 0; i < list.length; i++) {
-      //   postWidgets.add(new CardWidget(
-      //       list[i].userName, list[i].massage, list[i].description));
-      // }
-    builder: (context, state) {
-
-      return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text("Dear ${name}"),
-          backgroundColor: Colors.blueAccent,
-          actions: <Widget>[
-            Container(
-              padding: const EdgeInsets.only(right: 15.0),
-              child: Badge(
-                badgeContent: Text(
-                  '$counter',
-                  style: TextStyle(
-                    color: Colors.white,
+    return BlocBuilder<HomeBloc, HomeState>(
+        buildWhen: (pre, current) => pre.posts != current.posts,
+        builder: (context, state) {
+          for (int i = 0; i < list.length; i++) {
+            postWidgets.add(new CardWidget(
+                list[i].userName, list[i].massage, list[i].description));
+          }
+          return Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              title: Text("Dear ${name}"),
+              backgroundColor: Colors.blueAccent,
+              actions: <Widget>[
+                Container(
+                  padding: const EdgeInsets.only(right: 15.0),
+                  child: Badge(
+                    badgeContent: Text(
+                      '$counter',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    position: BadgePosition.topEnd(top: 6.0, end: -4.0),
+                    child: Icon(
+                      Icons.notifications,
+                      size: 30.0,
+                    ),
                   ),
                 ),
-                position: BadgePosition.topEnd(top: 6.0, end: -4.0),
-                child: Icon(
-                  Icons.notifications,
-                  size: 30.0,
-                ),
+                IconButton(
+                  padding: const EdgeInsets.only(right: 15.0),
+                  icon: const Icon(
+                    Icons.person_rounded,
+                    color: Colors.white,
+                  ),
+                )
+              ],
+            ),
+            backgroundColor: Colors.blue,
+            body: Center(
+              child: new ListView(
+                children: <Widget>[
+                  new Container(
+                    child: FormView(name, callback),
+                  ),
+                  new Container(
+                    height: 350,
+                    child: new ListView(
+                      children: postWidgets,
+                      scrollDirection: Axis.vertical,
+                    ),
+                  ),
+                ],
               ),
             ),
-            IconButton(
-              padding: const EdgeInsets.only(right: 15.0),
-              icon: const Icon(
-                Icons.person_rounded,
-                color: Colors.white,
-              ),
-            )
-          ],
-        ),
-        backgroundColor: Colors.blue,
-        body: Center(
-          child: new ListView(
-            children: <Widget>[
-              new Container(
-                child: FormView(name, callback),
-              ),
-              new Container(
-                height: 350,
-                child: new ListView(
-                  children: postWidgets,
-                  scrollDirection: Axis.vertical,
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-
-    }
-
-    );
+          );
+        });
   }
 }

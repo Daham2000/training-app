@@ -6,12 +6,12 @@ import '../client_home_page/home_page_view.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/rendering.dart';
 
-class Loginpage extends StatefulWidget {
+class LoginView extends StatefulWidget {
   @override
   _LoginpageState createState() => _LoginpageState();
 }
 
-class _LoginpageState extends State<Loginpage> {
+class _LoginpageState extends State<LoginView> {
   final _formKey = GlobalKey<FormState>();
   String name;
   String randomName;
@@ -136,7 +136,8 @@ class _LoginpageState extends State<Loginpage> {
                                   if (_formKey.currentState.validate()) {
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(builder: (context) => HomeView(name)),
+                                      MaterialPageRoute(
+                                          builder: (context) => HomeView()),
                                     );
                                   }
                                 },
