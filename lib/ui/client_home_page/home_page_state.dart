@@ -5,13 +5,15 @@ import 'package:flutter/material.dart';
 @immutable
 class HomeState {
   List<Post> posts;
+  String name;
 
-  HomeState({@required this.posts});
+  HomeState({@required this.posts, @required this.name});
 
   HomeState.init() : this(posts: null);
 
   HomeState clone({
     List<Post> posts,
+    String name
   }) {
     return HomeState(posts: posts ?? this.posts);
   }

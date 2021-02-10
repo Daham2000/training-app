@@ -1,3 +1,5 @@
+import 'package:dear_diary/theme/primary_theme.dart';
+import 'package:dear_diary/theme/style_color.dart';
 import 'package:flutter/material.dart';
 
 class CardWidget extends StatelessWidget {
@@ -12,8 +14,9 @@ class CardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    theme: PrimaryTheme.generateTheme(context);
     return Card(
-      color: Colors.lightBlue[100],
+      color: StyleColors.LIGHT_BLUE,
       margin: const EdgeInsets.all(14.0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       child: Column(

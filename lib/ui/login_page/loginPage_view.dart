@@ -1,5 +1,6 @@
 import 'package:dear_diary/ui/client_home_page/home_page.dart';
 import 'package:dear_diary/ui/client_home_page/home_page_bloc.dart';
+import 'package:dear_diary/ui/login_page/login_page.dart';
 import 'package:dear_diary/util/routes.dart';
 import 'package:dear_diary/widgets/DiaryCard.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -135,6 +136,7 @@ class _LoginpageState extends State<LoginView> {
                                 onPressed: () async {
                                   // otherwise.
                                   if (_formKey.currentState.validate()) {
+
                                     Future.microtask(
                                       () => Navigator.pushReplacementNamed(
                                           context, Routes.HOME_ROUTE),
@@ -149,7 +151,7 @@ class _LoginpageState extends State<LoginView> {
                                     children: <Widget>[
                                       Text("CONTINUE",
                                           style: TextStyle(
-                                              color: Colors.white,
+                                              // color: Colors.white,
                                               fontSize: 18.0)),
                                       SizedBox(width: 6),
                                       Icon(Icons.arrow_right_alt_rounded,

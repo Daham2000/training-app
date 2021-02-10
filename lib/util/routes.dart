@@ -2,7 +2,7 @@ import 'package:dear_diary/ui/client_home_page/home_page.dart';
 import 'package:dear_diary/ui/login_page/login_page.dart';
 import 'package:flutter/material.dart';
 
-abstract class Routes{
+abstract class Routes {
   Routes._();
 
   static const LOGIN_ROUTE = "login";

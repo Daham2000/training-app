@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dear_diary/db/models/Post.dart';
 import 'package:dear_diary/db/repository/postRepository/PostRepository.dart';
+import 'package:dear_diary/ui/login_page/login_page.dart';
 import 'package:dear_diary/widgets/DiaryForm.dart';
 import 'package:dear_diary/widgets/DiaryCard.dart';
 import 'package:fcode_bloc/fcode_bloc.dart';
@@ -16,7 +17,7 @@ class HomeView extends StatefulWidget {
   HomeView();
 
   @override
-  _HomeView createState() => _HomeView(name: "UserName");
+  _HomeView createState() => _HomeView();
 }
 
 class _HomeView extends State<HomeView> {
@@ -27,13 +28,15 @@ class _HomeView extends State<HomeView> {
   List<CardWidget> postWidgets = [];
   List<Post> list = [];
 
-  String name;
+  String name = LoginState.init().name;
 
-  _HomeView({this.name});
+  _HomeView();
 
   @override
   void initState() {
     super.initState();
+    name = LoginState().name;
+    print("${LoginState().name}");
   }
 
   @override
@@ -73,8 +76,7 @@ class _HomeView extends State<HomeView> {
           return Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
-              title: Text("Dear ${name}"),
-              backgroundColor: Colors.blueAccent,
+              title: Text("Dear, ${name}"),
               actions: <Widget>[
                 Container(
                   padding: const EdgeInsets.only(right: 15.0),
@@ -94,7 +96,7 @@ class _HomeView extends State<HomeView> {
                 ),
                 IconButton(
                   padding: const EdgeInsets.only(right: 15.0),
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.person_rounded,
                     color: Colors.white,
                   ),

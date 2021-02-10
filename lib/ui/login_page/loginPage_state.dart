@@ -8,11 +8,11 @@ class LoginState {
 
   LoginState({@required this.name});
 
-  LoginState.init(): this(name:null);
+  LoginState.init() : this(name: null);
 
   LoginState clone({
     String name,
-  }){
+  }) {
     return LoginState(name: name ?? this.name);
   }
 }

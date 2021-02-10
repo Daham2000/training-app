@@ -9,14 +9,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState>{
   LoginBloc(initialState) : super(initialState);
 
   void saveName(String name){
-
+    this.state.name = name;
   }
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) {
     switch(event.runtimeType){
       case SaveUserName:
-
+        saveName("FFF");
     }
   }
 

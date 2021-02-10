@@ -1,3 +1,4 @@
+import 'package:dear_diary/theme/style_color.dart';
 import 'package:flutter/material.dart';
 
 class FormView extends StatelessWidget {
@@ -14,7 +15,7 @@ class FormView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.blueAccent,
+      color: StyleColors.BLUE_ACCENT,
       margin: const EdgeInsets.all(10.0),
       shape: RoundedRectangleBorder(
         side: BorderSide(color: Colors.white70, width: 1),
