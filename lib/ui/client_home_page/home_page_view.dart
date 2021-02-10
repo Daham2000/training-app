@@ -15,14 +15,11 @@ class HomeView extends StatefulWidget {
   HomeView(this.UserName);
 
   static int count = 1;
-
   List<CardWidget> postWidgets = [];
 
   @override
   _HomeView createState() => _HomeView(name: UserName);
 }
-
-List<Post> list;
 
 class _HomeView extends State<HomeView> {
   int countPosts = 1;
@@ -30,6 +27,7 @@ class _HomeView extends State<HomeView> {
   Widget currentPage;
 
   List<CardWidget> postWidgets = [];
+  List<Post> list = [];
 
   String name;
 
@@ -37,39 +35,55 @@ class _HomeView extends State<HomeView> {
 
   @override
   void initState() {
-    postWidgets.clear();
-    getPosts();
     super.initState();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   //getPosts function
-  void getPosts() async {
+  Future<String> getPosts() async {
+    list.clear();
     Future<List<Post>> query =
         PostRepository().query(specification: ComplexSpecification([])).first;
     list = await query;
-    setState(() {});
   }
 
   void callback(String msg, String description) async {
-    PostRepository().add(item: new Post());
+    await PostRepository().add(
+        item: new Post(
+            created: Timestamp.now(),
+            userName: name,
+            massage: msg,
+            description: description));
   }
 
   final _formKey = GlobalKey<FormState>();
+  int counter = 3;
 
   @override
   Widget build(BuildContext context) {
-    int counter = 3;
 
-    for (int i = 0; i < list.length; i++) {
-      postWidgets.add(new CardWidget(
-          list[i].userName, list[i].massage, list[i].description));
-    }
+    final scaffold = Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
 
-    return Container(
-      child: Scaffold(
+    final mainChild = BlocBuilder<HomeBloc, HomeState>(
+      buildWhen:(pre, current) => pre.posts != current.posts,
+      // for (int i = 0; i < list.length; i++) {
+      //   postWidgets.add(new CardWidget(
+      //       list[i].userName, list[i].massage, list[i].description));
+      // }
+    builder: (context, state) {
+
+      return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Text("Dear, $name"),
+          title: Text("Dear ${name}"),
           backgroundColor: Colors.blueAccent,
           actions: <Widget>[
             Container(
@@ -107,14 +121,17 @@ class _HomeView extends State<HomeView> {
               new Container(
                 height: 350,
                 child: new ListView(
-                  children: postWidgets.reversed.toList(),
+                  children: postWidgets,
                   scrollDirection: Axis.vertical,
                 ),
               ),
             ],
           ),
         ),
-      ),
+      );
+
+    }
+
     );
   }
 }

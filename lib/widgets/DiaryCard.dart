@@ -13,43 +13,58 @@ class CardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.lightBlueAccent,
+      color: Colors.lightBlue[100],
       margin: const EdgeInsets.all(14.0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       child: Column(
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(14.0),
-            child: Text(
-              "$msg",
-              style: TextStyle(
-                fontSize: 28.0,
-              ),
-            ),
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(
-                padding: const EdgeInsets.only(left: 14.0),
-                child: Text(
-                  "$foo",
-                  style: TextStyle(
-                    fontSize: 14.0,
-                    decorationStyle: TextDecorationStyle.solid,
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20, left: 15, bottom: 6),
+                  child: Text(
+                    "$msg",
+                    style: TextStyle(
+                      fontSize: 38.0,
+                    ),
                   ),
                 ),
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(14.0),
-            child: Text(
-              "$description",
-              style: TextStyle(
-                fontSize: 17.0,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 16.0),
+                  child: Text(
+                    "$foo",
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      decorationStyle: TextDecorationStyle.solid,
+                    ),
+                  ),
+                ),
               ),
-            ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  "$description",
+                  style: TextStyle(
+                    fontSize: 19.0,
+                    decorationStyle: TextDecorationStyle.solid,
+                  ),
+                ),
+              ),
+            ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
