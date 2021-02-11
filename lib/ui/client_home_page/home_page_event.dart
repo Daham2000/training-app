@@ -14,8 +14,8 @@ class GetUserName extends HomeEvent {
   GetUserName();
 }
 
-class addPostCard extends HomeEvent {
+class AddPostCard extends HomeEvent {
   final Post post;
 
-  addPostCard(this.post);
+  AddPostCard(this.post);
 }

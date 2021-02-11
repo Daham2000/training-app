@@ -13,11 +13,12 @@ import 'home_page.dart';
 class HomeView extends StatefulWidget {
   static int count = 1;
   List<CardWidget> postWidgets = [];
+  final String name;
 
-  HomeView();
+  HomeView({this.name});
 
   @override
-  _HomeView createState() => _HomeView();
+  _HomeView createState() => _HomeView(name: name);
 }
 
 class _HomeView extends State<HomeView> {
@@ -25,12 +26,11 @@ class _HomeView extends State<HomeView> {
   FormView formView;
   Widget currentPage;
 
-  List<CardWidget> postWidgets = [];
   List<Post> list = [];
 
-  String name = "John default";
+  String name;
 
-  _HomeView();
+  _HomeView({this.name});
 
   @override
   void initState() {
@@ -42,7 +42,6 @@ class _HomeView extends State<HomeView> {
     super.dispose();
   }
 
-
   final _formKey = GlobalKey<FormState>();
   int counter = 3;
 
@@ -51,31 +50,19 @@ class _HomeView extends State<HomeView> {
     // ignore: close_sinks
     final homeBloc = BlocProvider.of<HomeBloc>(context);
 
+    //add a new post
     void callback(String msg, String description) async {
-      homeBloc.add(addPostCard(new Post(
+      // list.clear();
+      homeBloc.add(AddPostCard(new Post(
           userName: name,
           massage: msg,
           description: description,
           created: Timestamp.now())));
     }
 
-    //getPosts function
-    Future<String> getPosts() async {
-
-    }
-
-    setState(() {
-      name = homeBloc.getName();
-      print("Home state Name----------${name}");
-    });
-
     return BlocBuilder<HomeBloc, HomeState>(
         buildWhen: (pre, current) => pre.posts != current.posts,
         builder: (context, state) {
-          for (int i = 0; i < list.length; i++) {
-            postWidgets.add(new CardWidget(
-                list[i].userName, list[i].massage, list[i].description));
-          }
           return Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
@@ -116,7 +103,16 @@ class _HomeView extends State<HomeView> {
                   new Container(
                     height: 350,
                     child: new ListView(
-                      children: postWidgets,
+                      children: <Widget>[
+                        Text(
+                          'You can see your all post card are here',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 20.0, color: Colors.white),
+                        ),
+                        for (var item in state.posts)
+                          new CardWidget(
+                              item.userName, item.massage, item.description),
+                      ],
                       scrollDirection: Axis.vertical,
                     ),
                   ),

@@ -15,7 +15,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   void saveName(String name) {
     this.state.name = name;
-    HomeState.initialState.name = name;
   }
 
   String getName() {

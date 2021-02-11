@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dear_diary/db/models/Post.dart';
 import 'package:dear_diary/db/repository/postRepository/PostRepository.dart';
 import 'package:dear_diary/ui/login_page/login_page.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fcode_bloc/fcode_bloc.dart';
 
@@ -14,19 +15,27 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   final _postRepository = PostRepository();
 
-  HomeBloc(initialState) : super(HomeState.initialState);
   List<Post> list = [];
 
+  HomeBloc(BuildContext context) : super(HomeState.init()) {
+    getAllPosts();
+    add(GetAllPosts(list));
+  }
+
   //getAllPosts from here
-  Future<String> getAllPosts() async{
-    Future<List<Post>> query =
-        PostRepository().query(specification: ComplexSpecification([])).first;
-    list = await query;
+  getAllPosts() {
+    _postSubscription?.cancel();
+    _postSubscription =
+        _postRepository.query(specification: ComplexSpecification([])).listen((
+            event) {
+          add(GetAllPosts(event));
+        });
   }
 
   Future<void> savePost(Post post) async {
     print("SavePost Bloc called...");
-    PostRepository().add(
+    _postRepository.toMap(post);
+    _postRepository.add(
       item: new Post(
         userName: post.userName,
         massage: post.massage,
@@ -41,18 +50,19 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   @override
-  Stream<HomeState> mapEventToState(HomeEvent event) {
+  Stream<HomeState> mapEventToState(HomeEvent event) async* {
     switch (event.runtimeType) {
       case GetAllPosts:
-        getAllPosts();
+        final posts = (event as GetAllPosts).all;
+        yield state.clone(posts: posts);
         break;
 
       case GetUserName:
         getName();
         break;
 
-      case addPostCard:
-        final data = event as addPostCard;
+      case AddPostCard:
+        final data = event as AddPostCard;
         savePost(data.post);
     }
   }

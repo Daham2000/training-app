@@ -10,7 +10,6 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginpageState extends State<LoginView> {
-
   @override
   void initState() {
     super.initState();
@@ -33,7 +32,7 @@ class _LoginpageState extends State<LoginView> {
           children: <Widget>[
             Center(
                 child: Padding(
-              padding: const EdgeInsets.only(right: 13.0),
+              padding: const EdgeInsets.only(right: 18.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

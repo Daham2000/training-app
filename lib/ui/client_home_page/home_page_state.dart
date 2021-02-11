@@ -4,16 +4,14 @@ import 'package:flutter/material.dart';
 
 @immutable
 class HomeState {
-  List<Post> posts;
-  String name;
+  final List<Post> posts;
+  final String name;
 
   HomeState({@required this.posts, @required this.name});
 
-  HomeState.init() : this(posts: null);
+  HomeState.init() : this(posts: null, name: "");
 
   HomeState clone({List<Post> posts, String name}) {
-    return HomeState(posts: posts ?? this.posts);
+    return HomeState(posts: posts ?? this.posts, name: name ?? this.name);
   }
-
-  static HomeState get initialState => HomeState(name: "");
 }

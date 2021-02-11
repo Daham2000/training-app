@@ -24,19 +24,19 @@ class AppView extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           home: FutureBuilder(
             future: _fbApp,
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            print("You have an error ${snapshot.error.toString()}");
-            return Text("Something went wrong");
-          } else if (snapshot.hasData) {
-            return materialApp;
-          } else {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      )),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                print("You have an error ${snapshot.error.toString()}");
+                return Text("Something went wrong");
+              } else if (snapshot.hasData) {
+                return materialApp;
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          )),
     );
   }
 }

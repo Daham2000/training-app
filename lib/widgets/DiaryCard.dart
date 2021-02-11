@@ -26,7 +26,7 @@ class CardWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 15, bottom: 6),
+                  padding: const EdgeInsets.only(top: 20, left: 15, bottom: 6, right: 5),
                   child: Text(
                     "$msg",
                     style: TextStyle(
@@ -57,13 +57,15 @@ class CardWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  "$description",
-                  style: TextStyle(
-                    fontSize: 19.0,
-                    decorationStyle: TextDecorationStyle.solid,
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    "$description",
+                    style: TextStyle(
+                      fontSize: 19.0,
+                      decorationStyle: TextDecorationStyle.solid,
+                    ),
                   ),
                 ),
               ),
