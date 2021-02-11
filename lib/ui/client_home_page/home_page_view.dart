@@ -28,15 +28,13 @@ class _HomeView extends State<HomeView> {
   List<CardWidget> postWidgets = [];
   List<Post> list = [];
 
-  String name = LoginState.init().name;
+  String name = "John default";
 
   _HomeView();
 
   @override
   void initState() {
     super.initState();
-    name = LoginState().name;
-    print("${LoginState().name}");
   }
 
   @override
@@ -44,28 +42,33 @@ class _HomeView extends State<HomeView> {
     super.dispose();
   }
 
-  //getPosts function
-  Future<String> getPosts() async {
-    list.clear();
-    Future<List<Post>> query =
-        PostRepository().query(specification: ComplexSpecification([])).first;
-    list = await query;
-  }
-
-  void callback(String msg, String description) async {
-    await PostRepository().add(
-        item: new Post(
-            created: Timestamp.now(),
-            userName: name,
-            massage: msg,
-            description: description));
-  }
 
   final _formKey = GlobalKey<FormState>();
   int counter = 3;
 
   @override
   Widget build(BuildContext context) {
+    // ignore: close_sinks
+    final homeBloc = BlocProvider.of<HomeBloc>(context);
+
+    void callback(String msg, String description) async {
+      homeBloc.add(addPostCard(new Post(
+          userName: name,
+          massage: msg,
+          description: description,
+          created: Timestamp.now())));
+    }
+
+    //getPosts function
+    Future<String> getPosts() async {
+
+    }
+
+    setState(() {
+      name = homeBloc.getName();
+      print("Home state Name----------${name}");
+    });
+
     return BlocBuilder<HomeBloc, HomeState>(
         buildWhen: (pre, current) => pre.posts != current.posts,
         builder: (context, state) {

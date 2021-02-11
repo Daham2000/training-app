@@ -9,3 +9,13 @@ class GetAllPosts extends HomeEvent {
 
   GetAllPosts(this.all);
 }
+
+class GetUserName extends HomeEvent {
+  GetUserName();
+}
+
+class addPostCard extends HomeEvent {
+  final Post post;
+
+  addPostCard(this.post);
+}

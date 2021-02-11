@@ -1,23 +1,46 @@
 import 'dart:async';
 
 import 'package:dear_diary/db/repository/postRepository/PostRepository.dart';
+import 'package:dear_diary/ui/client_home_page/home_page.dart';
+import 'package:fcode_common/fcode_common.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fcode_bloc/fcode_bloc.dart';
 import 'login_page.dart';
 
-class LoginBloc extends Bloc<LoginEvent, LoginState>{
-  LoginBloc(initialState) : super(initialState);
+class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  static final log = Log("LoginBloc");
 
-  void saveName(String name){
+  LoginBloc(BuildContext context) : super(LoginState.initialState);
+
+  void saveName(String name) {
     this.state.name = name;
+    HomeState.initialState.name = name;
+  }
+
+  String getName() {
+    return "///${this.state.name}";
   }
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) {
-    switch(event.runtimeType){
+    switch (event.runtimeType) {
       case SaveUserName:
-        saveName("FFF");
+        final data = event as SaveUserName;
+        saveName(data.name);
+        print("state data name-----: ${this.state.name}");
     }
   }
 
+  @override
+  void onError(Object error, StackTrace stacktrace) {
+    super.onError(error, stacktrace);
+    log.e('$stacktrace');
+    log.e('$error');
+  }
+
+  @override
+  Future<void> close() async {
+    await super.close();
+  }
 }

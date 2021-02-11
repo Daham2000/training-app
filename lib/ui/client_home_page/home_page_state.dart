@@ -11,10 +11,9 @@ class HomeState {
 
   HomeState.init() : this(posts: null);
 
-  HomeState clone({
-    List<Post> posts,
-    String name
-  }) {
+  HomeState clone({List<Post> posts, String name}) {
     return HomeState(posts: posts ?? this.posts);
   }
+
+  static HomeState get initialState => HomeState(name: "");
 }

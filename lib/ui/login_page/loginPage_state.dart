@@ -15,4 +15,9 @@ class LoginState {
   }) {
     return LoginState(name: name ?? this.name);
   }
+
+  static LoginState get initialState => LoginState(
+      name: ""
+  );
+
 }
