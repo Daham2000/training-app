@@ -15,21 +15,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   final _postRepository = PostRepository();
 
-  List<Post> list = [];
-
   HomeBloc(BuildContext context) : super(HomeState.init()) {
     getAllPosts();
-    add(GetAllPosts(list));
   }
 
   //getAllPosts from here
   getAllPosts() {
     _postSubscription?.cancel();
-    _postSubscription =
-        _postRepository.query(specification: ComplexSpecification([])).listen((
-            event) {
-          add(GetAllPosts(event));
-        });
+    _postSubscription = _postRepository
+        .query(specification: ComplexSpecification([]))
+        .listen((event) {
+      add(GetAllPosts(event));
+    });
   }
 
   Future<void> savePost(Post post) async {
@@ -45,20 +42,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
   }
 
-  String getName() {
-    return "John";
-  }
-
   @override
   Stream<HomeState> mapEventToState(HomeEvent event) async* {
     switch (event.runtimeType) {
       case GetAllPosts:
         final posts = (event as GetAllPosts).all;
         yield state.clone(posts: posts);
-        break;
-
-      case GetUserName:
-        getName();
         break;
 
       case AddPostCard:

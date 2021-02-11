@@ -9,6 +9,6 @@ class HomeProvider extends BlocProvider<HomeBloc> {
   }) : super(
           key: key,
           create: (context) => HomeBloc(context),
-          child: HomeView(name: name),
+          child: HomeView(),
         );
 }

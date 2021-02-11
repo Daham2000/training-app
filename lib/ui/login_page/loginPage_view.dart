@@ -24,7 +24,7 @@ class _LoginpageState extends State<LoginView> {
   Widget build(BuildContext context) {
     // final rootBloc = BlocProvider.of<LoginBloc>(context);
 
-    return Expanded(
+    return Container(
       child: Scaffold(
         backgroundColor: Colors.blueAccent,
         body: Column(

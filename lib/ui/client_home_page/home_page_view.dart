@@ -13,12 +13,13 @@ import 'home_page.dart';
 class HomeView extends StatefulWidget {
   static int count = 1;
   List<CardWidget> postWidgets = [];
-  final String name;
 
-  HomeView({this.name});
+  // final String name;
+
+  // HomeView({this.name});
 
   @override
-  _HomeView createState() => _HomeView(name: name);
+  _HomeView createState() => _HomeView();
 }
 
 class _HomeView extends State<HomeView> {
@@ -26,11 +27,11 @@ class _HomeView extends State<HomeView> {
   FormView formView;
   Widget currentPage;
 
-  List<Post> list = [];
+  List<CardWidget> cardlist = [];
 
-  String name;
+  String name = "Silva";
 
-  _HomeView({this.name});
+  _HomeView();
 
   @override
   void initState() {
@@ -52,7 +53,6 @@ class _HomeView extends State<HomeView> {
 
     //add a new post
     void callback(String msg, String description) async {
-      // list.clear();
       homeBloc.add(AddPostCard(new Post(
           userName: name,
           massage: msg,
@@ -63,63 +63,70 @@ class _HomeView extends State<HomeView> {
     return BlocBuilder<HomeBloc, HomeState>(
         buildWhen: (pre, current) => pre.posts != current.posts,
         builder: (context, state) {
-          return Scaffold(
-            appBar: AppBar(
-              automaticallyImplyLeading: false,
-              title: Text("Dear, ${name}"),
-              actions: <Widget>[
-                Container(
-                  padding: const EdgeInsets.only(right: 15.0),
-                  child: Badge(
-                    badgeContent: Text(
-                      '$counter',
-                      style: TextStyle(
-                        color: Colors.white,
+          if(state.posts==null){
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }else{
+            return Scaffold(
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                title: Text("Dear, ${name}"),
+                actions: <Widget>[
+                  Container(
+                    padding: const EdgeInsets.only(right: 15.0),
+                    child: Badge(
+                      badgeContent: Text(
+                        '$counter',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      position: BadgePosition.topEnd(top: 6.0, end: -4.0),
+                      child: Icon(
+                        Icons.notifications,
+                        size: 30.0,
                       ),
                     ),
-                    position: BadgePosition.topEnd(top: 6.0, end: -4.0),
-                    child: Icon(
-                      Icons.notifications,
-                      size: 30.0,
+                  ),
+                  IconButton(
+                    padding: const EdgeInsets.only(right: 15.0),
+                    icon: Icon(
+                      Icons.person_rounded,
+                      color: Colors.white,
                     ),
-                  ),
-                ),
-                IconButton(
-                  padding: const EdgeInsets.only(right: 15.0),
-                  icon: Icon(
-                    Icons.person_rounded,
-                    color: Colors.white,
-                  ),
-                )
-              ],
-            ),
-            backgroundColor: Colors.blue,
-            body: Center(
-              child: new ListView(
-                children: <Widget>[
-                  new Container(
-                    child: FormView(name, callback),
-                  ),
-                  new Container(
-                    height: 350,
-                    child: new ListView(
-                      children: <Widget>[
-                        Text(
-                          'You can see your all post card are here',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 20.0, color: Colors.white),
-                        ),
-                        for (var item in state.posts)
-                          new CardWidget(
-                              item.userName, item.massage, item.description),
-                      ],
-                      scrollDirection: Axis.vertical,
-                    ),
-                  ),
+                  )
                 ],
               ),
-            ),
-          );
+              backgroundColor: Colors.blue,
+              body: Center(
+                child: new ListView(
+                  children: <Widget>[
+                    new Container(
+                      child: FormView(name, callback),
+                    ),
+                    new Container(
+                      height: 350,
+                      child: new ListView(
+                        children: <Widget>[
+                          Text(
+                            'You can see your all post card are here',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 20.0, color: Colors.white),
+                          ),
+                          for (var item in state.posts)
+                            new CardWidget(
+                                item.userName, item.massage, item.description),
+                        ],
+                        scrollDirection: Axis.vertical,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+
         });
   }
 }

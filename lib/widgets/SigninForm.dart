@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:dear_diary/ui/client_home_page/home_page.dart';
 import 'package:dear_diary/ui/login_page/login_page.dart';
 import 'package:dear_diary/util/routes.dart';
 import 'package:flutter/material.dart';
@@ -109,10 +108,8 @@ class SigninForm extends StatelessWidget {
                       if (_formKey.currentState.validate()) {
                         LoginBloc(context).add(SaveUserName(name));
                         Future.microtask(
-                          () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomeView(name: name)))
+                          () => Navigator.pushReplacementNamed(
+                              context, Routes.HOME_ROUTE),
                         );
                       }
                     },

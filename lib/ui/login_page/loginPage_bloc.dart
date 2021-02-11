@@ -17,10 +17,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     this.state.name = name;
   }
 
-  String getName() {
-    return "///${this.state.name}";
-  }
-
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) {
     switch (event.runtimeType) {

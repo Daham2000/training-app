@@ -30,7 +30,7 @@ class CardWidget extends StatelessWidget {
                   child: Text(
                     "$msg",
                     style: TextStyle(
-                      fontSize: 38.0,
+                      fontSize: 33.0,
                     ),
                   ),
                 ),
