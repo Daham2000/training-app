@@ -1,4 +1,5 @@
 import 'package:dear_diary/ui/login_page/login_page.dart';
+import 'package:dear_diary/util/assets.dart';
 import 'package:dear_diary/widgets/SigninForm.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/rendering.dart';
@@ -39,7 +40,7 @@ class _LoginpageState extends State<LoginView> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Image.asset(
-                      'assets/FF.jpg',
+                      Assets.LOGO_IMAGE,
                       width: 40,
                       height: 40,
                     ),

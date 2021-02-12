@@ -1,7 +1,7 @@
 abstract class LoginEvent {}
 
-class SaveUserName extends LoginEvent{
+class SaveUserNameEvent extends LoginEvent{
   final String name;
 
-  SaveUserName(this.name);
+  SaveUserNameEvent(this.name);
 }

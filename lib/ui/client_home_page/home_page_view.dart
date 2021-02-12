@@ -29,7 +29,7 @@ class _HomeView extends State<HomeView> {
 
   List<CardWidget> cardlist = [];
 
-  String name = "Silva";
+  String name = "John";
 
   _HomeView();
 
@@ -53,7 +53,7 @@ class _HomeView extends State<HomeView> {
 
     //add a new post
     void callback(String msg, String description) async {
-      homeBloc.add(AddPostCard(new Post(
+      homeBloc.add(AddPostCardEvent(new Post(
           userName: name,
           massage: msg,
           description: description,

@@ -106,7 +106,7 @@ class SigninForm extends StatelessWidget {
                     onPressed: () async {
                       // otherwise.
                       if (_formKey.currentState.validate()) {
-                        LoginBloc(context).add(SaveUserName(name));
+                        LoginBloc(context).add(SaveUserNameEvent(name));
                         Future.microtask(
                           () => Navigator.pushReplacementNamed(
                               context, Routes.HOME_ROUTE),

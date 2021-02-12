@@ -1,9 +1,7 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dear_diary/db/models/Post.dart';
 import 'package:dear_diary/db/repository/postRepository/PostRepository.dart';
-import 'package:dear_diary/ui/login_page/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fcode_bloc/fcode_bloc.dart';
@@ -25,7 +23,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     _postSubscription = _postRepository
         .query(specification: ComplexSpecification([]))
         .listen((event) {
-      add(GetAllPosts(event));
+      add(GetAllPostsEvent(event));
     });
   }
 
@@ -45,13 +43,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   @override
   Stream<HomeState> mapEventToState(HomeEvent event) async* {
     switch (event.runtimeType) {
-      case GetAllPosts:
-        final posts = (event as GetAllPosts).all;
+      case GetAllPostsEvent:
+        final posts = (event as GetAllPostsEvent).all;
         yield state.clone(posts: posts);
         break;
 
-      case AddPostCard:
-        final data = event as AddPostCard;
+      case AddPostCardEvent:
+        final data = event as AddPostCardEvent;
         savePost(data.post);
     }
   }

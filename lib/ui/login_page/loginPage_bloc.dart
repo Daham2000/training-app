@@ -20,8 +20,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) {
     switch (event.runtimeType) {
-      case SaveUserName:
-        final data = event as SaveUserName;
+      case SaveUserNameEvent:
+        final data = event as SaveUserNameEvent;
         saveName(data.name);
         print("state data name-----: ${this.state.name}");
     }
