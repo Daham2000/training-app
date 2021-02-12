@@ -12,11 +12,10 @@ import 'home_page.dart';
 
 class HomeView extends StatefulWidget {
   static int count = 1;
-  List<CardWidget> postWidgets = [];
 
-  // final String name;
+  final String name;
 
-  // HomeView({this.name});
+  HomeView({this.name});
 
   @override
   _HomeView createState() => _HomeView();
@@ -25,9 +24,6 @@ class HomeView extends StatefulWidget {
 class _HomeView extends State<HomeView> {
   int countPosts = 1;
   FormView formView;
-  Widget currentPage;
-
-  List<CardWidget> cardlist = [];
 
   String name = "John";
 
@@ -50,15 +46,16 @@ class _HomeView extends State<HomeView> {
   Widget build(BuildContext context) {
     // ignore: close_sinks
     final homeBloc = BlocProvider.of<HomeBloc>(context);
-
+    print(widget.name);
     //add a new post
     void callback(String msg, String description) async {
       homeBloc.add(AddPostCardEvent(new Post(
-          userName: name,
+          userName: widget.name,
           massage: msg,
           description: description,
           created: Timestamp.now())));
     }
+
 
     return BlocBuilder<HomeBloc, HomeState>(
         buildWhen: (pre, current) => pre.posts != current.posts,
@@ -71,7 +68,7 @@ class _HomeView extends State<HomeView> {
             return Scaffold(
               appBar: AppBar(
                 automaticallyImplyLeading: false,
-                title: Text("Dear, ${name}"),
+                title: Text("Dear, ${widget.name}"),
                 actions: <Widget>[
                   Container(
                     padding: const EdgeInsets.only(right: 15.0),
@@ -128,5 +125,6 @@ class _HomeView extends State<HomeView> {
           }
 
         });
+
   }
 }
