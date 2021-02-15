@@ -9,18 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SigninForm extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   String name;
-  List<String> nameList = [
-    "Noor",
-    "John",
-    "Nico",
-    "Mike",
-    "Peter",
-    "Tony",
-    "Jackson",
-    "Silva",
-    "Perera",
-    "Alice"
-  ];
+  String password;
 
   @override
   void initState() {}
@@ -28,7 +17,8 @@ class SigninForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final rootBloc = BlocProvider.of<LoginBloc>(context);
-    var txt = TextEditingController();
+    var un = TextEditingController();
+    var ps = TextEditingController();
     return Form(
       key: _formKey,
       child: Card(
@@ -56,13 +46,13 @@ class SigninForm extends StatelessWidget {
                 Padding(
                   //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
                   padding:
-                      EdgeInsets.symmetric(horizontal: 16.0, vertical: 2.0),
+                      EdgeInsets.only(top: 10, right: 10, left: 10, bottom: 10),
                   child: TextFormField(
                     autofocus: false,
-                    controller: txt,
+                    controller: un,
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Please enter a nick name';
+                        return 'Please enter a user name';
                       } else {
                         name = value;
                       }
@@ -70,29 +60,35 @@ class SigninForm extends StatelessWidget {
                     },
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Your Nickname',
-                        hintText: 'Your nickname'),
+                        labelText: 'Your username',
+                        hintText: 'Your username'),
                   ),
                 ),
+
+                //password field
                 Padding(
+                  //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
                   padding:
-                      const EdgeInsets.only(top: 10.0, left: 0.0, bottom: 10.0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.blue,
-                      onPrimary: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(32.0),
-                      ),
-                    ),
-                    onPressed: () {
-                      int i = Random().nextInt(10);
-                      name = nameList[i];
-                      txt.text = name;
+                      EdgeInsets.only(top: 10, right: 10, left: 10, bottom: 10),
+                  child: TextFormField(
+                    autofocus: false,
+                    controller: ps,
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Please enter your password.';
+                      } else {
+                        password = value;
+                      }
+                      return null;
                     },
-                    child: Text('RANDOM'),
+                    decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Password',
+                        hintText: 'Password'),
+                    obscureText: true,
                   ),
                 ),
+
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       vertical: 5.0, horizontal: 20.0),
@@ -111,7 +107,8 @@ class SigninForm extends StatelessWidget {
                         Future.microtask(() => Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => HomeProvider(name: name))));
+                                builder: (context) =>
+                                    HomeProvider(name: name))));
                       }
                     },
                     child: Center(
