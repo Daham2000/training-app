@@ -56,15 +56,14 @@ class _HomeView extends State<HomeView> {
           created: Timestamp.now())));
     }
 
-
     return BlocBuilder<HomeBloc, HomeState>(
         buildWhen: (pre, current) => pre.posts != current.posts,
         builder: (context, state) {
-          if(state.posts==null){
+          if (state.posts == null) {
             return Center(
               child: CircularProgressIndicator(),
             );
-          }else{
+          } else {
             return Scaffold(
               appBar: AppBar(
                 automaticallyImplyLeading: false,
@@ -109,7 +108,8 @@ class _HomeView extends State<HomeView> {
                           Text(
                             'You can see your all post card are here',
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 20.0, color: Colors.white),
+                            style:
+                                TextStyle(fontSize: 20.0, color: Colors.white),
                           ),
                           for (var item in state.posts)
                             new CardWidget(
@@ -123,8 +123,6 @@ class _HomeView extends State<HomeView> {
               ),
             );
           }
-
         });
-
   }
 }

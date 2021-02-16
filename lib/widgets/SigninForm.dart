@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:dear_diary/ui/client_home_page/home_page.dart';
 import 'package:dear_diary/ui/login_page/login_page.dart';
 import 'package:dear_diary/util/routes.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -52,16 +53,18 @@ class SigninForm extends StatelessWidget {
                     controller: un,
                     validator: (value) {
                       if (value.isEmpty) {
-                        return 'Please enter a user name';
-                      } else {
+                        return 'Please enter your email';
+                      } else if (EmailValidator.validate(value)) {
                         name = value;
+                      } else {
+                        return 'Please enter a valid Email';
                       }
                       return null;
                     },
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Your username',
-                        hintText: 'Your username'),
+                        labelText: 'Your email',
+                        hintText: 'Your email'),
                   ),
                 ),
 
@@ -103,12 +106,12 @@ class SigninForm extends StatelessWidget {
                     onPressed: () async {
                       // otherwise.
                       if (_formKey.currentState.validate()) {
-                        LoginBloc(context).add(SaveUserNameEvent(name));
-                        Future.microtask(() => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    HomeProvider(name: name))));
+                        LoginBloc(context).add(SigninEvent(name, password));
+                        // Future.microtask(() => Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) =>
+                        //             HomeProvider(name: name))));
                       }
                     },
                     child: Center(
@@ -116,7 +119,7 @@ class SigninForm extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Text("CONTINUE",
+                          Text("Login",
                               style: TextStyle(
                                   // color: Colors.white,
                                   fontSize: 18.0)),
