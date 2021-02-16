@@ -12,19 +12,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   LoginBloc(BuildContext context) : super(LoginState.initialState);
 
-  Future<String> SignUp({String email, String password}) async {
-    final result = await _authentication.register(email, password);
-    print("Signed up");
-  }
+  Future<String> SignUp({String email, String password}) async {}
 
-  Stream<LoginState> _handleUserLogged(String email, String password) async* {
-    if (state.userLogged) {
-      return;
-    }
-    if (email != null && email.isNotEmpty) {
-      yield state.clone(userLogged: true);
-    }
-  }
+  // Stream<LoginState> _handleUserLogged(String email, String password) async* {
+  //   if (state.userLogged) {
+  //     return;
+  //   }
+  //   if (email != null && email.isNotEmpty) {
+  //     yield state.clone(isUserSignUpd: true);
+  //   }
+  // }
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
@@ -46,20 +43,24 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         }
         try {
           final result = await _authentication.login(data.email, data.password);
-          yield state.clone(email: result.user.email, userId: result.user.uid, error: "");
+          yield state.clone(
+              email: result.user.email, userId: result.user.uid, error: "");
         } on FirebaseAuthException catch (e) {
           add(ErrorEvent("Something went wrong. Please try again !"));
+          yield state.clone(error: "${e.message}");
         }
         break;
 
       case SignUpEvent:
         final data = event as SignUpEvent;
-        SignUp(email: data.email, password: data.password);
-        break;
-
-      case UserLoggedEvent:
-        final data = event as UserLoggedEvent;
-        yield* _handleUserLogged(data?.email, data?.uid);
+        try {
+          final result =
+              await _authentication.register(data.email, data.password);
+          yield state.clone(isUserSignUpd: true);
+        } on FirebaseAuthException catch (e) {
+          add(ErrorEvent("Something went wrong. Please try again !"));
+          yield state.clone(isUserSignUpd: false);
+        }
         break;
     }
 

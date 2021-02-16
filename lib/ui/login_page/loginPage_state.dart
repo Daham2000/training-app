@@ -8,26 +8,26 @@ class LoginState {
   final String error;
   final String email;
   final String userId;
-  final bool userLogged;
+  final bool isUserSignUpd;
 
   LoginState({
     @required this.error,
     @required this.email,
     @required this.userId,
-    @required this.userLogged,
+    @required this.isUserSignUpd,
   });
 
   LoginState clone({
     String error,
     String email,
     String userId,
-    bool userLogged,
+    bool isUserSignUpd,
   }) {
     return LoginState(
       error: error ?? this.error,
       email: email ?? this.email,
       userId: userId ?? this.userId,
-      userLogged: userLogged ?? this.userLogged,
+      isUserSignUpd: isUserSignUpd ?? this.isUserSignUpd,
     );
   }
 
@@ -35,6 +35,6 @@ class LoginState {
         error: "",
         email: "",
         userId: "",
-        userLogged: false,
+        isUserSignUpd: false,
       );
 }

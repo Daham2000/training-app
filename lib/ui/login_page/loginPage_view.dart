@@ -1,3 +1,4 @@
+import 'package:dear_diary/theme/style_color.dart';
 import 'package:dear_diary/ui/client_home_page/home_page_provider.dart';
 import 'package:dear_diary/ui/login_page/login_page.dart';
 import 'package:dear_diary/util/assets.dart';
@@ -6,7 +7,7 @@ import 'package:fcode_common/fcode_common.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class LoginView extends StatefulWidget {
   @override
@@ -17,9 +18,12 @@ class _LoginpageState extends State<LoginView> {
   bool isLoginPage = true;
   final _formKey = GlobalKey<FormState>();
   final _formKey2 = GlobalKey<FormState>();
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
   String name;
   String email;
   String password;
+  CustomSnackBar _customSnackBar;
 
   @override
   void initState() {
@@ -40,7 +44,7 @@ class _LoginpageState extends State<LoginView> {
 
     final loginBloc = BlocProvider.of<LoginBloc>(context);
 
-    CustomSnackBar _customSnackBar;
+    _customSnackBar = CustomSnackBar(scaffoldKey: scaffoldKey);
 
     final userNameField = TextFormField(
       autofocus: false,
@@ -120,14 +124,33 @@ class _LoginpageState extends State<LoginView> {
     );
 
     void _loginClicked() {
-      // _customSnackBar.showLoadingSnackBar(backgroundColor: Colors.blueGrey);
+      _customSnackBar.showLoadingSnackBar(
+          backgroundColor: StyleColors.LIGHT_BLUE);
+      final email = (emailCtrl.text ?? "").trim();
+      final password = (passCtrl.text ?? "").trim();
+      if (EmailValidator.validate(email)) {
+        loginBloc.add(SigninEvent(email, password));
+      } else {
+        _customSnackBar.showErrorSnackBar("Email or Password is Empty!");
+        return;
+      }
+      if (email.isEmpty || password.isEmpty) {
+        _customSnackBar.showErrorSnackBar("Email or Password is Empty!");
+        return;
+      }
+    }
+
+    void _registerClicked() {
       final email = (emailCtrl.text ?? "").trim();
       final password = (passCtrl.text ?? "").trim();
       if (email.isEmpty || password.isEmpty) {
         _customSnackBar.showErrorSnackBar("Email or Password is Empty!");
         return;
       }
-      loginBloc.add(SigninEvent(email, password));
+      loginBloc.add(SignUpEvent(email, password));
+      setState(() {
+        isLoginPage = !isLoginPage;
+      });
     }
 
     final scaffold = Scaffold(
@@ -224,7 +247,9 @@ class _LoginpageState extends State<LoginView> {
                                       ),
                                     ),
                                     onPressed: () {
-                                      _loginClicked();
+                                      if (_formKey.currentState.validate()) {
+                                        _loginClicked();
+                                      }
                                     },
                                     child: Center(
                                       child: Row(
@@ -312,8 +337,10 @@ class _LoginpageState extends State<LoginView> {
                                             BorderRadius.circular(32.0),
                                       ),
                                     ),
-                                    onPressed: () async {
-                                      // otherwise.
+                                    onPressed: () {
+                                      if (_formKey2.currentState.validate()) {
+                                        _registerClicked();
+                                      }
                                     },
                                     child: Center(
                                       child: Row(
@@ -363,13 +390,18 @@ class _LoginpageState extends State<LoginView> {
       ),
     );
 
+    final spinkit = SpinKitSquareCircle(
+      color: Colors.white,
+      size: 50.0,
+    );
+
     return MultiBlocListener(
         listeners: [
           BlocListener<LoginBloc, LoginState>(
             listenWhen: (pre, current) => pre.error != current.error,
             listener: (context, state) {
               if (state.error.isNotEmpty) {
-                _customSnackBar?.showErrorSnackBar(state.error);
+                  _customSnackBar?.showErrorSnackBar(state.error);
               }
             },
           ),
@@ -379,10 +411,20 @@ class _LoginpageState extends State<LoginView> {
                 (pre.userId != current.userId && current.userId.isNotEmpty),
             listener: (context, state) {
               // loginBloc.add(UserLoggedEvent(state.email, state.userId));
+              spinkit;
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => HomeProvider(name: state.email)));
+            },
+          ),
+          BlocListener<LoginBloc, LoginState>(
+            listenWhen: (pre, current) =>
+                pre.isUserSignUpd != current.isUserSignUpd,
+            listener: (context, state) {
+              setState(() {
+                isLoginPage = true;
+              });
             },
           )
         ],

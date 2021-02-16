@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dear_diary/db/models/Post.dart';
-import 'package:dear_diary/db/repository/postRepository/PostRepository.dart';
-import 'package:dear_diary/ui/login_page/login_page.dart';
 import 'package:dear_diary/widgets/DiaryForm.dart';
 import 'package:dear_diary/widgets/DiaryCard.dart';
-import 'package:fcode_bloc/fcode_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
