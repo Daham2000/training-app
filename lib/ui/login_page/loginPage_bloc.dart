@@ -8,10 +8,7 @@ import 'login_page.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   static final log = Log("LoginBloc");
-  FirebaseAuth _firebaseAuth;
   Authentication _authentication = Authentication();
-
-  Stream<User> get authStateChanged => _firebaseAuth.authStateChanges();
 
   LoginBloc(BuildContext context) : super(LoginState.initialState);
 
@@ -20,29 +17,49 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     print("Signed up");
   }
 
-  void saveName(String email) {
-    this.state.email = email;
+  Stream<LoginState> _handleUserLogged(String email, String password) async* {
+    if (state.userLogged) {
+      return;
+    }
+    if (email != null && email.isNotEmpty) {
+      yield state.clone(userLogged: true);
+    }
   }
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
     switch (event.runtimeType) {
-      case SaveUserNameEvent:
-        final data = event as SaveUserNameEvent;
-        saveName(data.name);
-        print("state data name-----: ${this.state.email}");
+      case ErrorEvent:
+        final error = (event as ErrorEvent).error;
+        log.e('Error: $error');
+        yield state.clone(error: "");
+        yield state.clone(error: error);
         break;
 
       case SigninEvent:
         final data = event as SigninEvent;
-        final result = await _authentication.login(data.email, data.password);
-        yield state.clone(name: result);
-        print("${state.email}");
+        final fetchEmail =
+            await FirebaseAuth.instance.fetchSignInMethodsForEmail(data.email);
+        if (fetchEmail.isEmpty) {
+          add(ErrorEvent("User does not exist.Please SignUp."));
+          break;
+        }
+        try {
+          final result = await _authentication.login(data.email, data.password);
+          yield state.clone(email: result.user.email, userId: result.user.uid, error: "");
+        } on FirebaseAuthException catch (e) {
+          add(ErrorEvent("Something went wrong. Please try again !"));
+        }
         break;
 
       case SignUpEvent:
         final data = event as SignUpEvent;
         SignUp(email: data.email, password: data.password);
+        break;
+
+      case UserLoggedEvent:
+        final data = event as UserLoggedEvent;
+        yield* _handleUserLogged(data?.email, data?.uid);
         break;
     }
 

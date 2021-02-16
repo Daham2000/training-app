@@ -5,21 +5,36 @@ import 'package:flutter/material.dart';
 
 @immutable
 class LoginState {
-  String email;
-  String userID;
+  final String error;
+  final String email;
+  final String userId;
+  final bool userLogged;
 
-  LoginState({@required this.email});
-
-  LoginState.init() : this(email: null);
+  LoginState({
+    @required this.error,
+    @required this.email,
+    @required this.userId,
+    @required this.userLogged,
+  });
 
   LoginState clone({
-    String name,
+    String error,
+    String email,
+    String userId,
+    bool userLogged,
   }) {
     return LoginState(
-        email: name ?? this.email);
+      error: error ?? this.error,
+      email: email ?? this.email,
+      userId: userId ?? this.userId,
+      userLogged: userLogged ?? this.userLogged,
+    );
   }
 
   static LoginState get initialState => LoginState(
+        error: "",
         email: "",
+        userId: "",
+        userLogged: false,
       );
 }

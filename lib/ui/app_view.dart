@@ -14,7 +14,7 @@ class AppView extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Dear Diary",
       theme: PrimaryTheme.generateTheme(context),
-      home: LoginView(),
+      home: LoginProvider(),
       onGenerateRoute: Routes.generator,
     );
 
