@@ -19,6 +19,7 @@ class _LoginpageState extends State<LoginView> {
   final _formKey = GlobalKey<FormState>();
   final _formKey2 = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  String error;
 
   String name;
   String email;
@@ -111,7 +112,7 @@ class _LoginpageState extends State<LoginView> {
           return 'Please input at least 6 characters';
         } else {
           // ignore: unrelated_type_equality_checks
-          if (passCtrl.value != value) {
+          if (passCtrl.text != value) {
             return "Password doesn't match";
           }
         }
@@ -155,244 +156,276 @@ class _LoginpageState extends State<LoginView> {
 
     final scaffold = Scaffold(
       backgroundColor: Colors.blueAccent,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          SingleChildScrollView(
-            child: Container(
-              child: Center(
-                  child: Padding(
-                padding: const EdgeInsets.only(right: 18.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Image.asset(
-                        Assets.LOGO_IMAGE,
-                        width: 40,
-                        height: 40,
-                      ),
-                    ),
-                    Text(
-                      "Dear Diary",
-                      style: TextStyle(
-                        fontSize: 30,
-                        color: Colors.white,
-                      ),
-                    )
-                  ],
+      body: error != null
+          ? AlertDialog(
+              title: Text('Error massage'),
+              content: Text("${error}"),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('Close'),
+                  onPressed: () {
+                    setState(() {
+                      error = null;
+                    });
+                  },
                 ),
-              )),
-            ),
-          ),
-          Center(
-              child: isLoginPage
-                  ? Form(
-                      key: _formKey,
-                      child: Card(
-                        margin: const EdgeInsets.only(
-                            top: 10.0, left: 10.0, right: 10.0),
-                        child: Card(
-                          child: InkWell(
-                            splashColor: Colors.blue.withAlpha(30),
-                            child: Column(
-                              children: [
-                                Center(
-                                  child: Container(
-                                    padding: const EdgeInsets.only(
-                                        top: 5.0, left: 0.0, bottom: 30.0),
-                                    child: Center(
-                                      child: Text(
-                                        'Sign In',
-                                        style: TextStyle(
-                                          fontSize: 40.0,
-                                          color: Colors.blue,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-
-                                // emailField
-                                Padding(
-                                    //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-                                    padding: EdgeInsets.only(
-                                        top: 10,
-                                        right: 10,
-                                        left: 10,
-                                        bottom: 10),
-                                    child: emailField),
-
-                                //password field
-                                Padding(
-                                    //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-                                    padding: EdgeInsets.only(
-                                        top: 10,
-                                        right: 10,
-                                        left: 10,
-                                        bottom: 10),
-                                    child: passwordField),
-
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 5.0, horizontal: 20.0),
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Colors.blue,
-                                      onPrimary: Colors.white,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(32.0),
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      if (_formKey.currentState.validate()) {
-                                        _loginClicked();
-                                      }
-                                    },
-                                    child: Center(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text("Login",
-                                              style: TextStyle(
-                                                  // color: Colors.white,
-                                                  fontSize: 18.0)),
-                                          SizedBox(width: 6),
-                                          Icon(Icons.arrow_right_alt_rounded,
-                                              color: Colors.white),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+              ],
+            )
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SingleChildScrollView(
+                  child: Container(
+                    child: Center(
+                        child: Padding(
+                      padding: const EdgeInsets.only(right: 18.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Image.asset(
+                              Assets.LOGO_IMAGE,
+                              width: 40,
+                              height: 40,
                             ),
                           ),
-                        ),
-                      ),
-                    )
-                  : Form(
-                      key: _formKey2,
-                      child: Card(
-                        margin: const EdgeInsets.only(
-                            top: 10.0, left: 10.0, right: 10.0),
-                        child: Card(
-                          child: InkWell(
-                            splashColor: Colors.blue.withAlpha(30),
-                            child: Column(
-                              children: [
-                                Center(
-                                  child: Container(
-                                    padding: const EdgeInsets.only(
-                                        top: 5.0, left: 0.0, bottom: 30.0),
-                                    child: Center(
-                                      child: Text(
-                                        'Sign Up',
-                                        style: TextStyle(
-                                          fontSize: 40.0,
-                                          color: Colors.blue,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-                                  padding: EdgeInsets.only(
-                                      top: 10, right: 10, left: 10, bottom: 10),
-                                  child: userNameField,
-                                ),
-                                Padding(
-                                  //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-                                  padding: EdgeInsets.only(
-                                      top: 10, right: 10, left: 10, bottom: 10),
-                                  child: emailField,
-                                ),
-                                Padding(
-                                  //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-                                  padding: EdgeInsets.only(
-                                      top: 10, right: 10, left: 10, bottom: 10),
-                                  child: passwordField,
-                                ),
-                                Padding(
-                                  //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-                                  padding: EdgeInsets.only(
-                                      top: 10, right: 10, left: 10, bottom: 10),
-                                  child: passwordFieldConfirm,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 5.0, horizontal: 20.0),
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Colors.blue,
-                                      onPrimary: Colors.white,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(32.0),
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      if (_formKey2.currentState.validate()) {
-                                        _registerClicked();
-                                      }
-                                    },
-                                    child: Center(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Text("Register",
-                                              style: TextStyle(
-                                                  // color: Colors.white,
-                                                  fontSize: 18.0)),
-                                          SizedBox(width: 6),
-                                          Icon(Icons.arrow_right_alt_rounded,
-                                              color: Colors.white),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                          Text(
+                            "Dear Diary",
+                            style: TextStyle(
+                              fontSize: 30,
+                              color: Colors.white,
                             ),
-                          ),
-                        ),
+                          )
+                        ],
                       ),
                     )),
-          Center(
-            child: FlatButton(
-              onPressed: () {
-                setState(() {
-                  if (isLoginPage == true) {
-                    isLoginPage = false;
-                  } else {
-                    isLoginPage = true;
-                  }
-                });
-              },
-              child: Text(
-                isLoginPage
-                    ? "Don't have an account? Register now"
-                    : "Already have an account? Login",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          )
-        ],
-      ),
-    );
+                  ),
+                ),
+                Center(
+                    child: isLoginPage
+                        ? Form(
+                            key: _formKey,
+                            child: Card(
+                              margin: const EdgeInsets.only(
+                                  top: 10.0, left: 10.0, right: 10.0),
+                              child: Card(
+                                child: InkWell(
+                                  splashColor: Colors.blue.withAlpha(30),
+                                  child: Column(
+                                    children: [
+                                      Center(
+                                        child: Container(
+                                          padding: const EdgeInsets.only(
+                                              top: 5.0,
+                                              left: 0.0,
+                                              bottom: 30.0),
+                                          child: Center(
+                                            child: Text(
+                                              'Sign In',
+                                              style: TextStyle(
+                                                fontSize: 40.0,
+                                                color: Colors.blue,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
 
-    final spinkit = SpinKitSquareCircle(
-      color: Colors.white,
-      size: 50.0,
+                                      // emailField
+                                      Padding(
+                                          //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+                                          padding: EdgeInsets.only(
+                                              top: 10,
+                                              right: 10,
+                                              left: 10,
+                                              bottom: 10),
+                                          child: emailField),
+
+                                      //password field
+                                      Padding(
+                                          //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+                                          padding: EdgeInsets.only(
+                                              top: 10,
+                                              right: 10,
+                                              left: 10,
+                                              bottom: 10),
+                                          child: passwordField),
+
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5.0, horizontal: 20.0),
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.blue,
+                                            onPrimary: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(32.0),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            if (_formKey.currentState
+                                                .validate()) {
+                                              _loginClicked();
+                                            }
+                                          },
+                                          child: Center(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: <Widget>[
+                                                Text("Login",
+                                                    style: TextStyle(
+                                                        // color: Colors.white,
+                                                        fontSize: 18.0)),
+                                                SizedBox(width: 6),
+                                                Icon(
+                                                    Icons
+                                                        .arrow_right_alt_rounded,
+                                                    color: Colors.white),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )
+                        : Form(
+                            key: _formKey2,
+                            child: Card(
+                              margin: const EdgeInsets.only(
+                                  top: 10.0, left: 10.0, right: 10.0),
+                              child: Card(
+                                child: InkWell(
+                                  splashColor: Colors.blue.withAlpha(30),
+                                  child: Column(
+                                    children: [
+                                      Center(
+                                        child: Container(
+                                          padding: const EdgeInsets.only(
+                                              top: 5.0,
+                                              left: 0.0,
+                                              bottom: 30.0),
+                                          child: Center(
+                                            child: Text(
+                                              'Sign Up',
+                                              style: TextStyle(
+                                                fontSize: 40.0,
+                                                color: Colors.blue,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+                                        padding: EdgeInsets.only(
+                                            top: 10,
+                                            right: 10,
+                                            left: 10,
+                                            bottom: 10),
+                                        child: userNameField,
+                                      ),
+                                      Padding(
+                                        //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+                                        padding: EdgeInsets.only(
+                                            top: 10,
+                                            right: 10,
+                                            left: 10,
+                                            bottom: 10),
+                                        child: emailField,
+                                      ),
+                                      Padding(
+                                        //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+                                        padding: EdgeInsets.only(
+                                            top: 10,
+                                            right: 10,
+                                            left: 10,
+                                            bottom: 10),
+                                        child: passwordField,
+                                      ),
+                                      Padding(
+                                        //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+                                        padding: EdgeInsets.only(
+                                            top: 10,
+                                            right: 10,
+                                            left: 10,
+                                            bottom: 10),
+                                        child: passwordFieldConfirm,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 5.0, horizontal: 20.0),
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.blue,
+                                            onPrimary: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(32.0),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            if (_formKey2.currentState
+                                                .validate()) {
+                                              _registerClicked();
+                                            }
+                                          },
+                                          child: Center(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: <Widget>[
+                                                Text("Register",
+                                                    style: TextStyle(
+                                                        // color: Colors.white,
+                                                        fontSize: 18.0)),
+                                                SizedBox(width: 6),
+                                                Icon(
+                                                    Icons
+                                                        .arrow_right_alt_rounded,
+                                                    color: Colors.white),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          )),
+                Center(
+                  child: FlatButton(
+                    onPressed: () {
+                      setState(() {
+                        if (isLoginPage == true) {
+                          isLoginPage = false;
+                        } else {
+                          isLoginPage = true;
+                        }
+                      });
+                    },
+                    child: Text(
+                      isLoginPage
+                          ? "Don't have an account? Register now"
+                          : "Already have an account? Login",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                )
+              ],
+            ),
     );
 
     return MultiBlocListener(
@@ -401,7 +434,9 @@ class _LoginpageState extends State<LoginView> {
             listenWhen: (pre, current) => pre.error != current.error,
             listener: (context, state) {
               if (state.error.isNotEmpty) {
-                  _customSnackBar?.showErrorSnackBar(state.error);
+                setState(() {
+                  error = state.error;
+                });
               }
             },
           ),
@@ -410,8 +445,6 @@ class _LoginpageState extends State<LoginView> {
                 (pre.email != current.email && current.email.isNotEmpty) ||
                 (pre.userId != current.userId && current.userId.isNotEmpty),
             listener: (context, state) {
-              // loginBloc.add(UserLoggedEvent(state.email, state.userId));
-              spinkit;
               Navigator.push(
                   context,
                   MaterialPageRoute(

@@ -38,7 +38,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         final fetchEmail =
             await FirebaseAuth.instance.fetchSignInMethodsForEmail(data.email);
         if (fetchEmail.isEmpty) {
-          add(ErrorEvent("User does not exist.Please SignUp."));
+          add(ErrorEvent("This email does not exist.Please Signup."));
           break;
         }
         try {
