@@ -9,12 +9,14 @@ class CardWidget extends StatelessWidget {
       "English is the Language of International Communication \n"
       "English gives access to more entertainment and more access to the Internet \n"
       "English makes it easier to travel";
+  String created;
 
-  CardWidget(this.foo, this.msg, this.description);
+  CardWidget(this.foo, this.msg, this.description, this.created);
 
   @override
   Widget build(BuildContext context) {
-    theme: PrimaryTheme.generateTheme(context);
+    theme:
+    PrimaryTheme.generateTheme(context);
     return Card(
       color: StyleColors.LIGHT_BLUE,
       margin: const EdgeInsets.all(14.0),
@@ -26,11 +28,12 @@ class CardWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 15, bottom: 6, right: 5),
+                  padding: const EdgeInsets.only(
+                      top: 20, left: 15, bottom: 6, right: 5),
                   child: Text(
                     "$msg",
                     style: TextStyle(
-                      fontSize: 33.0,
+                      fontSize: 35.0,
                     ),
                   ),
                 ),
@@ -59,11 +62,28 @@ class CardWidget extends StatelessWidget {
             children: [
               Expanded(
                 child: Padding(
+                  padding: const EdgeInsets.only(left: 16.0, top: 2.0),
+                  child: Text(
+                    "$created",
+                    style: TextStyle(
+                      fontSize: 12.0,
+                      decorationStyle: TextDecorationStyle.solid,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
                     "$description",
                     style: TextStyle(
-                      fontSize: 19.0,
+                      fontSize: 20.0,
                       decorationStyle: TextDecorationStyle.solid,
                     ),
                   ),

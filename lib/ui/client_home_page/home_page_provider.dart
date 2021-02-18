@@ -5,10 +5,10 @@ import 'home_page.dart';
 class HomeProvider extends BlocProvider<HomeBloc> {
   HomeProvider({
     Key key,
-    String name,
+    String email,
   }) : super(
           key: key,
-          create: (context) => HomeBloc(context),
-          child: HomeView(name: name),
+          create: (context) => HomeBloc(context,email),
+          child: HomeView(name: email),
         );
 }

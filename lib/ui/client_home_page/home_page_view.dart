@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dear_diary/db/models/Post.dart';
 import 'package:dear_diary/widgets/DiaryForm.dart';
 import 'package:dear_diary/widgets/DiaryCard.dart';
+import 'package:fcode_common/fcode_common.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,6 +39,9 @@ class _HomeView extends State<HomeView> {
 
   final _formKey = GlobalKey<FormState>();
   int counter = 3;
+  DateTime selectedDate = DateTime.now();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +57,21 @@ class _HomeView extends State<HomeView> {
           created: Timestamp.now())));
     }
 
+    Future<void> _selectDate(BuildContext context) async {
+      final DateTime picked = await showDatePicker(
+          context: context,
+          initialDate: selectedDate,
+          firstDate: DateTime(2015, 8),
+          lastDate: DateTime(2101, 2));
+      if (picked != null && picked != selectedDate){
+        setState(() {
+          selectedDate = picked;
+        });
+        await homeBloc.add(
+            GetPostByDataEvent(Timestamp.fromDate(selectedDate)));
+      }
+    }
+
     return BlocBuilder<HomeBloc, HomeState>(
         buildWhen: (pre, current) => pre.posts != current.posts,
         builder: (context, state) {
@@ -66,29 +85,20 @@ class _HomeView extends State<HomeView> {
                 automaticallyImplyLeading: false,
                 title: Text("Dear, ${widget.name}"),
                 actions: <Widget>[
-                  Container(
-                    padding: const EdgeInsets.only(right: 15.0),
-                    child: Badge(
-                      badgeContent: Text(
-                        '$counter',
-                        style: TextStyle(
+                  Column(
+                    children: [
+                      IconButton(
+                        padding: const EdgeInsets.all(15.0),
+                        icon: Icon(
+                          Icons.calendar_today,
                           color: Colors.white,
                         ),
+                        onPressed: () {
+                          _selectDate(context);
+                        },
                       ),
-                      position: BadgePosition.topEnd(top: 6.0, end: -4.0),
-                      child: Icon(
-                        Icons.notifications,
-                        size: 30.0,
-                      ),
-                    ),
+                    ],
                   ),
-                  IconButton(
-                    padding: const EdgeInsets.only(right: 15.0),
-                    icon: Icon(
-                      Icons.person_rounded,
-                      color: Colors.white,
-                    ),
-                  )
                 ],
               ),
               backgroundColor: Colors.blue,
@@ -103,14 +113,17 @@ class _HomeView extends State<HomeView> {
                       child: new ListView(
                         children: <Widget>[
                           Text(
-                            'You can see your all post card are here',
+                            'To select posts by date, pick up a date from calender at the appbar',
                             textAlign: TextAlign.center,
                             style:
-                                TextStyle(fontSize: 20.0, color: Colors.white),
+                                TextStyle(fontSize: 15.0, color: Colors.white),
                           ),
                           for (var item in state.posts)
                             new CardWidget(
-                                item.userName, item.massage, item.description),
+                                item.userName,
+                                item.massage,
+                                item.description,
+                                item.created.toDate().toString()),
                         ],
                         scrollDirection: Axis.vertical,
                       ),

@@ -449,7 +449,7 @@ class _LoginpageState extends State<LoginView> {
             listener: (context, state) {
               Navigator.push(
                   context,
-                  PageTransition(type: PageTransitionType.fade, child:  HomeProvider(name: state.email))
+                  PageTransition(type: PageTransitionType.fade, child:  HomeProvider(email: state.email))
                   );
             },
           ),
