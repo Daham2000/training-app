@@ -34,7 +34,7 @@ dependencies:
   provider: ^4.3.3
   fcode_common: ^0.0.15
   email_validator: '^1.0.0'
-  flutter_easyloading: ^2.2.2
+  page_transition: ^1.1.4
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -48,7 +48,7 @@ dev_dependencies:
   flutter_launcher_name: "^0.0.1"
 
 flutter_icons:
-  image_path: "assets/FF.jpg"
+  image_path: "assets/luanch.jpg"
   android: true
   ios: true
 

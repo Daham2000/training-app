@@ -7,7 +7,7 @@ import 'package:fcode_common/fcode_common.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:page_transition/page_transition.dart';
 
 class LoginView extends StatefulWidget {
   @override
@@ -449,8 +449,8 @@ class _LoginpageState extends State<LoginView> {
             listener: (context, state) {
               Navigator.push(
                   context,
-                  MaterialPageRoute(
-                      builder: (context) => HomeProvider(name: state.email)));
+                  PageTransition(type: PageTransitionType.fade, child:  HomeProvider(name: state.email))
+                  );
             },
           ),
           BlocListener<LoginBloc, LoginState>(
