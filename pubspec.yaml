@@ -44,6 +44,13 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.8.1"
+  flutter_launcher_name: "^0.0.1"
+
+flutter_icons:
+  image_path: "assets/FF.jpg"
+  android: true
+  ios: true
 
 flutter_launcher_name:
   name: "Dear diary"
