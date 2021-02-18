@@ -20,6 +20,7 @@ class _LoginpageState extends State<LoginView> {
   final _formKey2 = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   String error;
+  String info;
 
   String name;
   String email;
@@ -42,6 +43,7 @@ class _LoginpageState extends State<LoginView> {
     var passCtrl = TextEditingController();
     var emailCtrl = TextEditingController();
     var passConfirmCtrl = TextEditingController();
+    bool isLoading = false;
 
     final loginBloc = BlocProvider.of<LoginBloc>(context);
 
@@ -156,16 +158,16 @@ class _LoginpageState extends State<LoginView> {
 
     final scaffold = Scaffold(
       backgroundColor: Colors.blueAccent,
-      body: error != null
+      body: info != null
           ? AlertDialog(
-              title: Text('Error massage'),
-              content: Text("${error}"),
+              title: Text(''),
+              content: Text("${info}"),
               actions: <Widget>[
                 TextButton(
                   child: Text('Close'),
                   onPressed: () {
                     setState(() {
-                      error = null;
+                      info = null;
                     });
                   },
                 ),
@@ -435,7 +437,7 @@ class _LoginpageState extends State<LoginView> {
             listener: (context, state) {
               if (state.error.isNotEmpty) {
                 setState(() {
-                  error = state.error;
+                  info = state.error;
                 });
               }
             },
@@ -457,6 +459,7 @@ class _LoginpageState extends State<LoginView> {
             listener: (context, state) {
               setState(() {
                 isLoginPage = true;
+                info = "Registration success";
               });
             },
           )
